@@ -1,4 +1,4 @@
-# 🐋 Whale Stream - 가상 매매 모의 투자 시스템
+# 🐋 WhaleStream - 가상 매매 모의 투자 시스템
 
 <img src="https://github.com/user-attachments/assets/da29cc3f-ea9a-40b6-9b2b-3d5dcf8e9ba0" alt="WhaleStreamLogo" width="700"/>
 
