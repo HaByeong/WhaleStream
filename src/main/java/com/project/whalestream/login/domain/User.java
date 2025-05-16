@@ -21,8 +21,8 @@ public class User {
     private String email;
     private String phoneNum;
     private int userHeight;
+    private String jwtRefreshToken;
 
-    //private String role;
 
     public User(String userId, String password, String name, int age, String email, String phoneNum, int userHeight) {
         this.userId = userId;

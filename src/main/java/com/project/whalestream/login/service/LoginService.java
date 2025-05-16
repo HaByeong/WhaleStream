@@ -1,5 +1,6 @@
 package com.project.whalestream.login.service;
 
+import com.project.whalestream.login.domain.User;
 import com.project.whalestream.login.dto.LoginRequestDto;
 import com.project.whalestream.login.dto.LoginResponseDto;
 import com.project.whalestream.login.dto.RepositoryPasswordReturnDto;
@@ -30,7 +31,10 @@ public class LoginService implements LoginServiceInterface {
         if(repositoryPasswordReturnDto.getPassword() == null || !bcryptPasswordEncoder.matches(requestPassword, repositoryPasswordReturnDto.getPassword())) {
             throw new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다");
         } else {
-            return new LoginResponseDto(requestId, jwtTokenProvider.generateToken(requestId));
+            User user = userRepository.findByUserId(requestId);
+            user.setJwtRefreshToken(jwtTokenProvider.generateRefreshToken(requestId));
+            userRepository.save(user);
+            return new LoginResponseDto(requestId, jwtTokenProvider.generateAccessToken(requestId), user.getJwtRefreshToken());
         }
     }
 }
