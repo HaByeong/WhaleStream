@@ -1,9 +1,6 @@
 package com.project.whalestream.login.controller;
 
-import com.project.whalestream.login.dto.UserLoginRequestDto;
-import com.project.whalestream.login.dto.UserLoginResponseDto;
-import com.project.whalestream.login.dto.UserSignUpRequestDto;
-import com.project.whalestream.login.dto.UserUpdateRequestDto;
+import com.project.whalestream.login.dto.*;
 import com.project.whalestream.login.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +17,7 @@ public class LoginController {
     private final UserLoginServiceInterface loginService;
     private final UserUpdateServiceInterface userUpdateService;
     private final UserLogOutInterface userLogOutService;
+    private final UserInfoServiceInterface userInfoService;
 
     @PostMapping("/login")
     public UserLoginResponseDto loginMethod(@RequestBody UserLoginRequestDto userLoginRequestDto) {
@@ -50,5 +48,14 @@ public class LoginController {
         return "사용자 변경이 완료되었습니다.";
     }
 
+    @PostMapping("/user-info")
+    public void userInfoMethod(@RequestBody UserInfoRequestDto userInfoRequestDto) {
+        userInfoService.saveUserInfo(userInfoRequestDto);
+    }
+
+    @PostMapping("/user-info-update")
+    public void userInfoUpdateMethod(@RequestBody UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
+        userInfoService.updateUserInfo(userInfoUpdateRequestDto);
+    }
 
 }
