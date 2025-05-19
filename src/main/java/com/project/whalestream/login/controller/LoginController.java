@@ -4,9 +4,7 @@ import com.project.whalestream.login.dto.LoginRequestDto;
 import com.project.whalestream.login.dto.LoginResponseDto;
 import com.project.whalestream.login.dto.SignUpRequestDto;
 import com.project.whalestream.login.dto.UserUpdateRequestDto;
-import com.project.whalestream.login.service.LoginService;
-import com.project.whalestream.login.service.SignUpUseCase;
-import com.project.whalestream.login.service.UserUpdateService;
+import com.project.whalestream.login.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     private final SignUpUseCase signUpUseCase;
-    private final LoginService loginService;
-    private final UserUpdateService userUpdateService;
-    /*
-      @Autowired
-    * public LoginController(SignUpUseCase signUpUseCase) {
-    *       this.signUpUseCase = signUpuseCase
-    * }
-    * */
+    private final LoginServiceInterface loginService;
+    private final UserUpdateServiceInterface userUpdateService;
+    private final UserLogOutInterface userLogOutService;
+
     @PostMapping("/login")
     public LoginResponseDto loginMethod(@RequestBody LoginRequestDto loginRequestDto) {
         // loginservice 실행해가지고!! 이제 일치하면~~ login 그리고 토큰을 지급한다.
@@ -46,7 +40,7 @@ public class LoginController {
 
     @PostMapping("/log-out")
     public void logoutMetgod(){
-        //일단 로그아웃 비워둠(Refresh Token 넣으면 삭제 등)
+        userLogOutService.logout();
     };
 
     @PostMapping("/user-update")

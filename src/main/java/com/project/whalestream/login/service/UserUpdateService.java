@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserUpdateService implements UpdateServiceInterface{
+public class UserUpdateService implements UserUpdateServiceInterface {
 
     private final UserRepository userRepository;
 
