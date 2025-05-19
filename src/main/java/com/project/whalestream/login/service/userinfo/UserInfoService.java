@@ -1,9 +1,9 @@
-package com.project.whalestream.login.service;
+package com.project.whalestream.login.service.userinfo;
 
-import com.project.whalestream.login.domain.UserInfo;
-import com.project.whalestream.login.dto.UserInfoRequestDto;
-import com.project.whalestream.login.dto.UserInfoUpdateRequestDto;
-import com.project.whalestream.login.repository.UserInfoRepository;
+import com.project.whalestream.login.domain.userinfo.UserInfo;
+import com.project.whalestream.login.dto.userinfo.UserInfoRequestDto;
+import com.project.whalestream.login.dto.userinfo.UserInfoUpdateRequestDto;
+import com.project.whalestream.login.repository.userinfo.UserInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

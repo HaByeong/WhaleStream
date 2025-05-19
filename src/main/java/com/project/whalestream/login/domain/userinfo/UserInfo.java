@@ -1,4 +1,4 @@
-package com.project.whalestream.login.domain;
+package com.project.whalestream.login.domain.userinfo;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

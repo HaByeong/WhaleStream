@@ -1,4 +1,4 @@
-package com.project.whalestream.login.domain;
+package com.project.whalestream.login.domain.user;
 
 import lombok.AccessLevel;
 import lombok.Getter;

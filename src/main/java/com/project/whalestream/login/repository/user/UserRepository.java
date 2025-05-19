@@ -1,7 +1,7 @@
-package com.project.whalestream.login.repository;
+package com.project.whalestream.login.repository.user;
 
-import com.project.whalestream.login.domain.User;
-import com.project.whalestream.login.dto.RepositoryPasswordReturnDto;
+import com.project.whalestream.login.domain.user.User;
+import com.project.whalestream.login.dto.auth.RepositoryPasswordReturnDto;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

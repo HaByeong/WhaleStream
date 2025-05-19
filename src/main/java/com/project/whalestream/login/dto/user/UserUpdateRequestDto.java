@@ -1,4 +1,4 @@
-package com.project.whalestream.login.dto;
+package com.project.whalestream.login.dto.user;
 
 import lombok.Data;
 

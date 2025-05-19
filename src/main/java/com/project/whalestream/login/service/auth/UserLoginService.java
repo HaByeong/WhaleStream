@@ -1,10 +1,10 @@
-package com.project.whalestream.login.service;
+package com.project.whalestream.login.service.auth;
 
-import com.project.whalestream.login.domain.User;
-import com.project.whalestream.login.dto.UserLoginRequestDto;
-import com.project.whalestream.login.dto.UserLoginResponseDto;
-import com.project.whalestream.login.dto.RepositoryPasswordReturnDto;
-import com.project.whalestream.login.repository.UserRepository;
+import com.project.whalestream.login.domain.user.User;
+import com.project.whalestream.login.dto.auth.UserLoginRequestDto;
+import com.project.whalestream.login.dto.auth.UserLoginResponseDto;
+import com.project.whalestream.login.dto.auth.RepositoryPasswordReturnDto;
+import com.project.whalestream.login.repository.user.UserRepository;
 import com.project.whalestream.login.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserUserLoginService implements UserLoginServiceInterface {
+public class UserLoginService implements UserLoginServiceInterface {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bcryptPasswordEncoder;

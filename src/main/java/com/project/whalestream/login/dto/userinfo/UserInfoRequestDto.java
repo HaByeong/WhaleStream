@@ -1,9 +1,9 @@
-package com.project.whalestream.login.dto;
+package com.project.whalestream.login.dto.userinfo;
 
 import lombok.Data;
 
 @Data
-public class UserInfoUpdateRequestDto {
+public class UserInfoRequestDto {
 
     private String userId;
 

@@ -1,8 +1,8 @@
-package com.project.whalestream.login.service;
+package com.project.whalestream.login.service.signup;
 
-import com.project.whalestream.login.domain.User;
-import com.project.whalestream.login.dto.UserSignUpRequestDto;
-import com.project.whalestream.login.repository.UserRepository;
+import com.project.whalestream.login.domain.user.User;
+import com.project.whalestream.login.dto.signup.UserSignUpRequestDto;
+import com.project.whalestream.login.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 // 클라이언트의 회원가입 요청을 받아서 User 객체를 만듬, 비밀번호는 BCryptPasswordEncoder 이용해서 해싱
 @Service
 @RequiredArgsConstructor
-public class UserUserSignUpService implements UserSignUpUseCase {
+public class UserSignUpService implements UserSignUpUseCase {
     //private User user = new User();
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;

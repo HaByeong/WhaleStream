@@ -1,6 +1,6 @@
-package com.project.whalestream.login.repository;
+package com.project.whalestream.login.repository.userinfo;
 
-import com.project.whalestream.login.domain.UserInfo;
+import com.project.whalestream.login.domain.userinfo.UserInfo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

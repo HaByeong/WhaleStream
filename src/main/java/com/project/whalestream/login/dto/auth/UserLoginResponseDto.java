@@ -1,4 +1,4 @@
-package com.project.whalestream.login.dto;
+package com.project.whalestream.login.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
