@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 // 클라이언트의 회원가입 요청을 받아서 User 객체를 만듬, 비밀번호는 BCryptPasswordEncoder 이용해서 해싱
 @Service
 @RequiredArgsConstructor
-public class UserSignUpService implements UserSignUpUseCase {
+public class UserSignUpService implements UserSignUpServiceInterface {
     //private User user = new User();
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;

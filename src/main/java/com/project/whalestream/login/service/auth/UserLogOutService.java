@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserLogOutService implements UserLogOutInterface{
+public class UserLogOutService implements UserLogOutServiceInterface {
 
     private final UserRepository userRepository;
 
