@@ -1,8 +1,8 @@
 package com.project.whalestream.login.service;
 
 import com.project.whalestream.login.domain.User;
-import com.project.whalestream.login.dto.LoginRequestDto;
-import com.project.whalestream.login.dto.LoginResponseDto;
+import com.project.whalestream.login.dto.UserLoginRequestDto;
+import com.project.whalestream.login.dto.UserLoginResponseDto;
 import com.project.whalestream.login.dto.RepositoryPasswordReturnDto;
 import com.project.whalestream.login.repository.UserRepository;
 import com.project.whalestream.login.security.JwtTokenProvider;
@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class LoginService implements LoginServiceInterface {
+public class UserUserLoginService implements UserLoginServiceInterface {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bcryptPasswordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        String requestId = loginRequestDto.getUserId();
-        String requestPassword = loginRequestDto.getPassword();
+    public UserLoginResponseDto login(UserLoginRequestDto userLoginRequestDto) {
+        String requestId = userLoginRequestDto.getUserId();
+        String requestPassword = userLoginRequestDto.getPassword();
         //이 아래에 일치하는지 확인도 로그인
         //이게 아이디로 비교하지말고 어차피 클라이언트가 입력한 아이디로 조회했을 때 비번이 없으면(Null 반환) 애초에 없던 계정이니
         //그냥 비번으로 조회하는게 편함
@@ -34,7 +34,7 @@ public class LoginService implements LoginServiceInterface {
             User user = userRepository.findByUserId(requestId);
             user.setJwtRefreshToken(jwtTokenProvider.generateRefreshToken(requestId));
             userRepository.save(user);
-            return new LoginResponseDto(requestId, jwtTokenProvider.generateAccessToken(requestId), user.getJwtRefreshToken());
+            return new UserLoginResponseDto(requestId, jwtTokenProvider.generateAccessToken(requestId), user.getJwtRefreshToken());
         }
     }
 }

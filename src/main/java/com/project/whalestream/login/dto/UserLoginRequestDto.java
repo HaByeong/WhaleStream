@@ -5,7 +5,7 @@ import lombok.Data;
 //로그인 DTO
 
 @Data
-public class LoginRequestDto {
+public class UserLoginRequestDto {
     private String userId;
     private String password;
 }

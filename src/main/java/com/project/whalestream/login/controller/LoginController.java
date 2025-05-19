@@ -1,8 +1,8 @@
 package com.project.whalestream.login.controller;
 
-import com.project.whalestream.login.dto.LoginRequestDto;
-import com.project.whalestream.login.dto.LoginResponseDto;
-import com.project.whalestream.login.dto.SignUpRequestDto;
+import com.project.whalestream.login.dto.UserLoginRequestDto;
+import com.project.whalestream.login.dto.UserLoginResponseDto;
+import com.project.whalestream.login.dto.UserSignUpRequestDto;
 import com.project.whalestream.login.dto.UserUpdateRequestDto;
 import com.project.whalestream.login.service.*;
 import lombok.RequiredArgsConstructor;
@@ -16,25 +16,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ai")
 public class LoginController {
 
-    private final SignUpUseCase signUpUseCase;
-    private final LoginServiceInterface loginService;
+    private final UserSignUpUseCase userSignUpUseCase;
+    private final UserLoginServiceInterface loginService;
     private final UserUpdateServiceInterface userUpdateService;
     private final UserLogOutInterface userLogOutService;
 
     @PostMapping("/login")
-    public LoginResponseDto loginMethod(@RequestBody LoginRequestDto loginRequestDto) {
+    public UserLoginResponseDto loginMethod(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         // loginservice 실행해가지고!! 이제 일치하면~~ login 그리고 토큰을 지급한다.
 
         //사실 return은 LoginResponseDto를 해줘야한다. -> 토큰 발급해줘야지
         //맞으면 service에서 토큰을 발급하여 LoginResponseDto에 넣고 그걸 반환
 
-        return loginService.login(loginRequestDto);
+        return loginService.login(userLoginRequestDto);
     }
 
     @PostMapping("/sign-up")
-    public String signupMethod(@RequestBody SignUpRequestDto signupRequestDto) {
+    public String signupMethod(@RequestBody UserSignUpRequestDto signupRequestDtoUser) {
         //회원가입 로직 처리
-        signUpUseCase.newUser(signupRequestDto);
+        userSignUpUseCase.newUser(signupRequestDtoUser);
         return "회원 가입 완료";
     }
 
