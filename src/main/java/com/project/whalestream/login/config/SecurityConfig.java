@@ -5,6 +5,7 @@ import com.project.whalestream.login.security.JwtTokenProvider;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,7 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         //requestMatchers() -> 특정 URL 경로를 지정
                         //.permitAll() -> 해당 경로는 인증 불필요
-                        .requestMatchers("/ai/signup", "/ai/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         // 다른 요청들은 .authenticated()로 전부 인증이 필요하다
                         .anyRequest().authenticated()
                 )
