@@ -7,7 +7,9 @@ import com.project.whalestream.login.dto.auth.RepositoryPasswordReturnDto;
 import com.project.whalestream.login.repository.user.UserRepository;
 import com.project.whalestream.login.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,7 @@ public class UserLoginService implements UserLoginServiceInterface {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public UserLoginResponseDto login(UserLoginRequestDto userLoginRequestDto) {
+    public ResponseEntity login(UserLoginRequestDto userLoginRequestDto) {
         String requestId = userLoginRequestDto.getUserId();
         String requestPassword = userLoginRequestDto.getPassword();
         //이 아래에 일치하는지 확인도 로그인
@@ -32,11 +34,19 @@ public class UserLoginService implements UserLoginServiceInterface {
         if(repositoryPasswordReturnDto.getPassword() == null || !bcryptPasswordEncoder.matches(requestPassword, repositoryPasswordReturnDto.getPassword())) {
             throw new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다");
         } else {
+            //Refresh 토큰 생성 및 디비 저장
             User user = userRepository.findByUserId(requestId);
             String refreshToken = jwtTokenProvider.generateRefreshToken(requestId);
             user.setJwtRefreshToken(refreshToken);
             userRepository.save(user);
-            return new UserLoginResponseDto(requestId, jwtTokenProvider.generateAccessToken(requestId), makeCookie(refreshToken));
+
+            //쿠키 생성
+            ResponseCookie refreshTokenCookie = makeCookie(refreshToken);
+
+            //ResponseEntity 반환
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                    .body(new UserLoginResponseDto(requestId, jwtTokenProvider.generateAccessToken(requestId)));
         }
     }
 
