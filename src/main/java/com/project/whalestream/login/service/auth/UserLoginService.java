@@ -7,6 +7,7 @@ import com.project.whalestream.login.dto.auth.RepositoryPasswordReturnDto;
 import com.project.whalestream.login.repository.user.UserRepository;
 import com.project.whalestream.login.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +33,20 @@ public class UserLoginService implements UserLoginServiceInterface {
             throw new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다");
         } else {
             User user = userRepository.findByUserId(requestId);
-            user.setJwtRefreshToken(jwtTokenProvider.generateRefreshToken(requestId));
+            String refreshToken = jwtTokenProvider.generateRefreshToken(requestId);
+            user.setJwtRefreshToken(refreshToken);
             userRepository.save(user);
-            return new UserLoginResponseDto(requestId, jwtTokenProvider.generateAccessToken(requestId), user.getJwtRefreshToken());
+            return new UserLoginResponseDto(requestId, jwtTokenProvider.generateAccessToken(requestId), makeCookie(refreshToken));
         }
+    }
+
+    public ResponseCookie makeCookie(String refreshToken) {
+        return ResponseCookie.from("refreshToken", refreshToken) //.from() : 쿠기 이름과 값을 지정하여 빌더를 시작
+                .httpOnly(true) //JavaScript로 접근 못하게 하자
+                .secure(true) //HTTPS에서만 전송
+                .path("/") //전체 경로 쿠키 전송
+                .maxAge(7*24*60*60) // 수명
+                .sameSite("Strict") //CSRF 방지
+                .build();
     }
 }
