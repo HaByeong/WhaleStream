@@ -41,7 +41,7 @@ public class UserLoginService implements UserLoginServiceInterface {
             userRepository.save(user);
 
             //쿠키 생성
-            ResponseCookie refreshTokenCookie = makeCookie(refreshToken);
+            ResponseCookie refreshTokenCookie = makeRefreshCookie(refreshToken);
 
             //ResponseEntity 반환
             return ResponseEntity.ok()
@@ -50,7 +50,7 @@ public class UserLoginService implements UserLoginServiceInterface {
         }
     }
 
-    public ResponseCookie makeCookie(String refreshToken) {
+    public ResponseCookie makeRefreshCookie(String refreshToken) {
         return ResponseCookie.from("refreshToken", refreshToken) //.from() : 쿠기 이름과 값을 지정하여 빌더를 시작
                 .httpOnly(true) //JavaScript로 접근 못하게 하자
                 .secure(true) //HTTPS에서만 전송
