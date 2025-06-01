@@ -35,6 +35,7 @@ public class SecurityConfig {
                         //.permitAll() -> 해당 경로는 인증 불필요
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/reissue").permitAll()
                         // 다른 요청들은 .authenticated()로 전부 인증이 필요하다
                         .anyRequest().authenticated()
                 )
