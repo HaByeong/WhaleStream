@@ -38,8 +38,8 @@ public class UserAuthController {
     }
 
     @PostMapping("/logout")
-    public void userLogOut(){
-        userLogOutService.logout();
+    public ResponseEntity userLogOut(){
+        return userLogOutService.logout();
     };
 
 
