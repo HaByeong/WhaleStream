@@ -1,9 +1,8 @@
 package com.project.whalestream.login.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.util.ToStringUtil;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -45,5 +44,26 @@ public class JwtTokenProvider {
 
         return claims.getSubject();
 
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token);
+
+            return true;
+        } catch (SecurityException | MalformedJwtException e) {
+            System.out.println("잘못된 토큰 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            System.out.println("기간이 만료된 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            System.out.println("지원하지 않는 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("잘못된 토큰입니다.");
+        }
+
+        return false;
     }
 }

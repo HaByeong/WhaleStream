@@ -1,15 +1,21 @@
 package com.project.whalestream.login.controller.auth;
 
+import com.project.whalestream.login.dto.auth.ReissuedTokenDto;
 import com.project.whalestream.login.dto.auth.UserLoginRequestDto;
 import com.project.whalestream.login.dto.auth.UserLoginResponseDto;
+import com.project.whalestream.login.service.auth.AccessTokenReissueService;
 import com.project.whalestream.login.service.auth.UserLogOutServiceInterface;
 import com.project.whalestream.login.service.auth.UserLoginServiceInterface;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @RestController // HTTP 요청을 처리하는 컨트롤러를 의미
@@ -18,6 +24,7 @@ public class UserAuthController {
 
     private final UserLoginServiceInterface loginService;
     private final UserLogOutServiceInterface userLogOutService;
+    private final AccessTokenReissueService accessTokenReissueService;
 
 
     @PostMapping("/login")
@@ -35,4 +42,19 @@ public class UserAuthController {
         userLogOutService.logout();
     };
 
+
+    //Access 토큰 만료시 프론트에서 /reissue 로 넘겨줘야함
+    @PostMapping("/reissue")
+    public ReissuedTokenDto reissueAccessToken(HttpServletRequest request) {
+        String refreshToken = Arrays.stream(request.getCookies())
+                .filter(c -> c.getName().equals("refreshToken"))
+                .findFirst()
+                .map(Cookie::getValue)
+                .orElseThrow(() -> new IllegalArgumentException("쿠키에 Refresh Token이 없습니다."));
+
+        return new ReissuedTokenDto(
+                accessTokenReissueService
+                        .reissueAccessToken(refreshToken)
+        );
+    }
 }
