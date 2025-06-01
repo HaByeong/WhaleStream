@@ -3,6 +3,7 @@ package com.project.whalestream.login.config;
 import com.project.whalestream.login.security.JwtAuthenticationFilter;
 import com.project.whalestream.login.security.JwtTokenProvider;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,9 +13,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class SecurityConfig {
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -44,7 +49,7 @@ public class SecurityConfig {
     @Bean
     public SecretKey secretKey() {
         //시크릿 키를 application.yml로 따로 분리
-        return Keys.hmacShaKeyFor("your-256-bit-secret-your-256-bit-secret".getBytes());
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
     @Bean
