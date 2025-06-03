@@ -4,6 +4,7 @@ import com.project.whalestream.login.dto.userinfo.UserInfoRequestDto;
 import com.project.whalestream.login.dto.userinfo.UserInfoUpdateRequestDto;
 import com.project.whalestream.login.service.userinfo.UserInfoServiceInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -14,12 +15,14 @@ public class UserProfileController {
     private final UserInfoServiceInterface userInfoService;
 
     @PostMapping("/info")
-    public void registerUserInfo(@RequestBody UserInfoRequestDto userInfoRequestDto) {
+    public ResponseEntity registerUserInfo(@RequestBody UserInfoRequestDto userInfoRequestDto) {
         userInfoService.saveUserInfo(userInfoRequestDto);
+        return ResponseEntity.ok("사용자 프로필 등록 완료");
     }
 
     @PutMapping("/info")
-    public void changeUserInfo(@RequestBody UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
+    public ResponseEntity changeUserInfo(@RequestBody UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
         userInfoService.updateUserInfo(userInfoUpdateRequestDto);
+        return ResponseEntity.ok("사용자 프로필 수정 완료");
     }
 }
